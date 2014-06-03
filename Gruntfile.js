@@ -1,6 +1,8 @@
 module.exports = function (grunt) {
     // Charge les plugins Grunt automatiquement
     require('load-grunt-tasks')(grunt);
+    // Charge les tâches personnalisées
+    grunt.loadTasks('tasks');
 
     grunt.initConfig({
 	clean: {
@@ -33,15 +35,6 @@ module.exports = function (grunt) {
 	    html: 'dist/index.html'
 	}
     });
-    
-    grunt.registerTask('build', [
-	'clean:dist',
-	'copy:dist',
-	'useminPrepare',
-	'cssmin', 
-	'uglify',
-	'usemin'
-    ]);
     
     grunt.registerTask('default', ['build']);
 }; 
