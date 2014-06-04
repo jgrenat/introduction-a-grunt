@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-	<!-- build:css public/global.js -->
+	    <!-- build:css public/global.js -->
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <!-- endbuild -->
     </head>
@@ -9,19 +9,19 @@
         <h1>Page web simple</h1>
         <p>Cette page inclut des fichiers CSS et javascript</p>
         <p>Petite addition : 5 + 7 = <input id="addResult" type="text" /></p>
-	<p>Petite soustraction : 12 - 8 = <input id="subResult" type="text" /></p>
-	<p>Adresse du serveur : @@serverUrl</p>
-		
-	<!-- build:js public/scripts.js -->
+        <p>Petite soustraction : 12 - 8 = <input id="subResult" type="text" /></p>
+        <p>Adresse du serveur : @@serverUrl</p>
+
+        <!-- build:js public/scripts.js -->
         <script src="js/add.js"></script>
         <script src="js/substract.js"></script>
         <!-- endbuild -->
-        
-	<script>
-	    document.addEventListener('DOMContentLoaded', function() {
-		    document.getElementById('addResult').value = add(5, 7);
-		    document.getElementById('subResult').value = substract(12, 8);
-	    });
-	</script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('addResult').value = add(5, 7);
+                document.getElementById('subResult').value = substract(12, 8);
+            });
+        </script>
     </body>
 </html>

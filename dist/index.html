@@ -1,22 +1,22 @@
 <!doctype html>
 <html>
     <head>
-	<link rel="stylesheet" href="public/global.js"/>
+	    <link rel="stylesheet" href="public/global.js"/>
     </head>
     <body>
         <h1>Page web simple</h1>
         <p>Cette page inclut des fichiers CSS et javascript</p>
         <p>Petite addition : 5 + 7 = <input id="addResult" type="text" /></p>
-	<p>Petite soustraction : 12 - 8 = <input id="subResult" type="text" /></p>
-	<p>Adresse du serveur : http://mon-domaine.com</p>
-		
-	<script src="public/scripts.js"></script>
-        
-	<script>
-	    document.addEventListener('DOMContentLoaded', function() {
-		    document.getElementById('addResult').value = add(5, 7);
-		    document.getElementById('subResult').value = substract(12, 8);
-	    });
-	</script>
+        <p>Petite soustraction : 12 - 8 = <input id="subResult" type="text" /></p>
+        <p>Adresse du serveur : @@serverUrl</p>
+
+        <script src="public/scripts.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('addResult').value = add(5, 7);
+                document.getElementById('subResult').value = substract(12, 8);
+            });
+        </script>
     </body>
 </html>

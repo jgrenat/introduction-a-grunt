@@ -1,8 +1,8 @@
 {
     "prod": {
-	"serverUrl": "http://mon-domaine.com"
+	    "serverUrl": "http://mon-domaine.com"
     },
     "preprod": {
-	"serverUrl": "http://preprod.mon-domaine.com"
+	    "serverUrl": "http://preprod.mon-domaine.com"
     }
 }
