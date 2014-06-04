@@ -1,1 +1,0 @@
-h1{border-left:6px solid green;border-bottom:3px solid green;padding-left:6px;padding-bottom:3px}
