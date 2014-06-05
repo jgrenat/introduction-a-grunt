@@ -40,17 +40,18 @@ module.exports = function (grunt) {
         return replaces;
     }
     
-    function replaceInFile(filePath, replaces) {
-	    // On parcourt chaque fichier pour remplacer les variables
-        grunt.file.copy(filePath, filePath, {
+    function replaceInFile(sourcePath, destPath, replaces) {
+        // Vérification de la destination
+        if(grunt.file.isDir(destPath)) {
+            destPath = destPath + '/' + sourcePath.split('/').pop();
+        }
+        // On remplace les variables dans le fichier
+        grunt.file.copy(sourcePath, destPath, {
             process: function(content) {
-                var i;
                 // On remplace les variables une à une dans le fichier
-                for(i in replaces) {
-                    if(replaces.hasOwnProperty(i)) {
-                        content = content.replace(replaces[i][0], replaces[i][1]);
-                    }
-                }
+                replaces.forEach(function(replace) {
+                    content = content.replace(replace[0], replace[1]);
+                });
                 return content;
             }
         });
@@ -60,28 +61,36 @@ module.exports = function (grunt) {
         var replaces;
 
         var target = grunt.option('target');
-        // Fichier JSON contenant les variables de configuration
-        var configFile = 'config.json';
-        // Fichier JSON contenant les variables de configuration
-        var sourceDirectory = 'dist';
-        // Paramètre la forme des remplacements, ici : @@var
-        var openString = '@@', closeString = '';
-
         // On vérifie qu'on a bien la cible
         if(!target) {
             grunt.fail.warn('Unable to replace config vars : target option missing.');
             return false;
         }
 
-        // On récupère les remplacements à effectuer selon l'targetironnement
-        replaces = getConfigReplacements(configFile, target, openString, closeString);
+        var options = this.options({
+            'configFile': 'config.json',
+            'openString': '@@',
+            'closeString': ''
+        });
+
+        // On récupère les remplacements à effectuer selon l'environnement
+        replaces = getConfigReplacements(options['configFile'], target, options['openString'], options['closeString']);
 
         grunt.log.writeln('Replacing config vars for *' + target + '* target... ');
-        // Cette fonction parcourt récursivement tous les fichiers du répertoire spécifié
-        grunt.file.recurse(sourceDirectory, function(absPath, rootDir, subDir, filename) {
-            grunt.verbose.writeln('Processing file *' + (subDir || '.') + '/' + filename + '*... ');
-            var result = replaceInFile(absPath, replaces);
-            return result;
+        this.files.forEach(function(file) {
+            // Si on n'a aucun fichier source pour une destination, on passe à la suite
+            if(file.src.length < 1) {
+                return;
+            }
+            // On retourne une erreur si on a plusieurs fichiers sources pour un seul fichier cible
+            if(file.src.length !== 1 && !grunt.file.isDir(file.dest)) {
+                grunt.fail.warn('replace-config-vars doesn\'t handle files concatenation.');
+                return;
+            }
+            file.src.forEach(function(path) {
+                grunt.verbose.writeln('Processing file *' + path + '*... ');
+                replaceInFile(path, file.dest, replaces);
+            });
         });
         grunt.log.ok('Every files have been processed!');
     });

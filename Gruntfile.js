@@ -19,7 +19,8 @@ module.exports = function (grunt) {
 
         'replace-config-vars': {
             'prod': {
-                'test': 18
+                src: ['dist/*.html'],
+                dest: 'dist'
             }
         },
 
