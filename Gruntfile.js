@@ -5,35 +5,35 @@ module.exports = function (grunt) {
     grunt.loadTasks('tasks');
 
     grunt.initConfig({
-	clean: {
-	    dist: ['dist/*']
-	},
-      
-	copy: {
-	    dist: {
-		src: ['*.html', 'images/**/*'],
-		dest: 'dist/'
-	    }
-	},
+        clean: {
+            dist: ['dist/*']
+        },
+
+        copy: {
+            dist: {
+                src: ['*.html', 'images/**/*'],
+                dest: 'dist/'
+            }
+        },
+
+        useminPrepare: {
+            html: {
+                src: ['index.html']
+            },
+            options: {
+                flow: {
+                    steps: {
+                        js: ['uglifyjs'],
+                        css: ['cssmin'],
+                    },
+                    post: {}
+                }
+            }
+        },
 	
-	useminPrepare: {
-	    html: {
-		src: ['index.html']
-	    },
-	    options: {
-		flow: {
-		    steps: {
-			js: ['uglifyjs'],
-			css: ['cssmin'],
-		    },
-		    post: {}
-		}
-	    }
-	},
-	
-	usemin: {
-	    html: 'dist/index.html'
-	}
+        usemin: {
+            html: 'dist/index.html'
+        }
     });
     
     grunt.registerTask('default', ['build']);
