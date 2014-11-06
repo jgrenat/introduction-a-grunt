@@ -45,7 +45,7 @@ module.exports = function (grunt) {
         });
     }
 
-    grunt.task.registerTask('replace-config-vars', 'Remplace les variables de configuration selon l\'environnement', function(target) {
+    grunt.task.registerTask('replace-config-vars', 'Remplace les variables de configuration selon l\'environnement', function(environment) {
         var replaces;
 
         // Fichier JSON contenant les variables de configuration
@@ -62,9 +62,9 @@ module.exports = function (grunt) {
         }
 
         // On récupère les remplacements à effectuer
-        replaces = getConfigReplacements(configFile, target, openString, closeString);
+        replaces = getConfigReplacements(configFile, environment, openString, closeString);
 
-        grunt.log.writeln('Replacing config vars for *' + target + '* env... ');
+        grunt.log.writeln('Replacing config vars for *' + environment + '* env... ');
         // Cette fonction parcourt récursivement tous les fichiers du répertoire spécifié
         grunt.file.recurse(sourceDirectory, function(absPath, rootDir, subDir, filename) {
             grunt.verbose.writeln('Processing file *' + (subDir || '.') + '/' + filename + '*... ');
