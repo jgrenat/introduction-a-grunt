@@ -8,32 +8,32 @@ module.exports = function (grunt) {
         }
     });
 
-    function getConfigReplacements(configFile, target, openString, closeString) {
-        var i, configVars, targetVars, replaces = [];
+    function getConfigReplacements(configFile, environment, openString, closeString) {
+        var i, configVars, envVars, replaces = [];
 
         // Protège les chaînes à convertir en regex
         var escapeRegexp = /([.*+?^=!:${}()|\[\]\/\\])/g;
 
-        grunt.log.writeln('Checking the target... ');
+        grunt.log.writeln('Checking the environment... ');
 
         if(!(configVars = grunt.file.readJSON(configFile))) {
             grunt.fail.warn('Unable to replace config vars : file ' + configFile + ' could not be opened');
             return null;
         }
 
-        // Si la cible est inconnue on targetoie un message d'erreur et on arrête la tâche
-        if(!(targetVars = configVars[target])) {
-            grunt.fail.warn('Unable to replace config vars : unknown target.');
+        // Si l'environnement cible est inconnu on targetoie un message d'erreur et on arrête la tâche
+        if(!(envVars = configVars[environment])) {
+            grunt.fail.warn('Unable to replace config vars : unknown environment.');
             return null;
         }
-        grunt.log.ok('Target checked!');
+        grunt.log.ok('Environment checked!');
 
         // On convertit les variables en regex pour les remplacements multiples.
-        for(i in targetVars) {
-            if(targetVars.hasOwnProperty(i)) {
+        for(i in envVars) {
+            if(envVars.hasOwnProperty(i)) {
                 regexp = new RegExp((openString + i + closeString).replace(escapeRegexp, '$1'), 'g');
-                replaces.push([regexp, targetVars[i]]);
-                grunt.verbose.writeln('Replacement of *' + i + '* by *' + targetVars[i] + '* found');
+                replaces.push([regexp, envVars[i]]);
+                grunt.verbose.writeln('Replacement of *' + i + '* by *' + envVars[i] + '* found');
             }
         }
 
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
         });
     }
 
-    grunt.registerMultiTask('replace-config-vars', 'Remplace les variables de configuration selon l\'targetironnement', function() {
+    grunt.registerMultiTask('replace-config-vars', 'Remplace les variables de configuration selon l\'environnement', function() {
         var replaces;
 
         var target = grunt.option('target');
