@@ -68,7 +68,8 @@ module.exports = function (grunt) {
         // Cette fonction parcourt récursivement tous les fichiers du répertoire spécifié
         grunt.file.recurse(sourceDirectory, function(absPath, rootDir, subDir, filename) {
             grunt.verbose.writeln('Processing file *' + (subDir || '.') + '/' + filename + '*... ');
-            var result = replaceInFile(absPath, replaces);
+            // Dans la ligne suivante, la destination est actuellement la même que le fichier source, on "réécrit" notre fichier
+            var result = replaceInFile(absPath, absPath, replaces);
             return result;
         });
         grunt.log.ok('Every files have been processed!');
