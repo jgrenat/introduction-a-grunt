@@ -6,7 +6,7 @@ module.exports = function(grunt) {
             grunt.option('env', 'preprod');
         }
 
-	    grunt.task.run([
+		grunt.task.run([
             'clean:dist',
             'copy:dist',
             'useminPrepare',
