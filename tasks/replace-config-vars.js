@@ -60,10 +60,10 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('replace-config-vars', 'Remplace les variables de configuration selon l\'environnement', function() {
         var replaces;
 
-        var target = grunt.option('target');
+        var environment = grunt.option('env');
         // On vérifie qu'on a bien la cible
-        if(!target) {
-            grunt.fail.warn('Unable to replace config vars : target option missing.');
+        if(!environment) {
+            grunt.fail.warn('Unable to replace config vars : env option missing.');
             return false;
         }
 
@@ -74,9 +74,9 @@ module.exports = function (grunt) {
         });
 
         // On récupère les remplacements à effectuer selon l'environnement
-        replaces = getConfigReplacements(options['configFile'], target, options['openString'], options['closeString']);
+        replaces = getConfigReplacements(options['configFile'], environment, options['openString'], options['closeString']);
 
-        grunt.log.writeln('Replacing config vars for *' + target + '* target... ');
+        grunt.log.writeln('Replacing config vars for *' + environment + '* environment... ');
         this.files.forEach(function(file) {
             // Si on n'a aucun fichier source pour une destination, on passe à la suite
             if(file.src.length < 1) {
