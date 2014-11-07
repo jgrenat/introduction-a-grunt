@@ -1,11 +1,9 @@
 module.exports = function(grunt) {
     grunt.registerTask('build', function(target) {
-	    // La target au sens Grunt
         target = target || '';
-
         // L'environnement
-        if(!grunt.option('target')) {
-            grunt.option('target', 'prod');
+        if(!grunt.option('env')) {
+            grunt.option('env', 'preprod');
         }
 
 	    grunt.task.run([
